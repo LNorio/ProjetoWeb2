@@ -8,7 +8,7 @@ const multerConfig = require("./config/index.js")
 
 
 routes.get('/', (req,res) => {
-    res.render('index');
+    res.redirect('/prod');
 });
   
 routes.get('/sing', (req, res) => {

@@ -4,7 +4,7 @@ class ProductController {
 
   async index(req, res) {
     const prod = await Product.find();
-    return res.json(prod);
+    return res.status(200).json(prod);
   }
   
   async store(req, res) {
@@ -16,14 +16,18 @@ class ProductController {
       } else {
         key = "";
       }
-      const product = await Product.create({
-        name: req.body.name,
-        price: req.body.price,
-        key: key,
-        url: "",
-      });
-      console.log("bundinha")
-      return res.json(product);
+      try{
+        const product = await Product.create({
+          name: req.body.name,
+          price: req.body.price,
+          key: key,
+          url: "",
+        });
+        return res.status(200).json(product);
+      }
+      catch(e){
+        return res.status(500);
+      }
       //return res.redirect('/prod');
     //}
     //return res.redirect('/')
@@ -37,7 +41,7 @@ class ProductController {
           return item
         }
       }));
-      return res.json(search);
+      return res.status(200).json(search);
     //}
     //return res.redirect('./');
   }
@@ -51,7 +55,7 @@ class ProductController {
 
   async destroy(req, res) {
     await Product.findByIdAndRemove(req.params.id);
-    return res.send({ deleted: true });
+    return res.status(200).send({ deleted: true });
   }
 }
 
